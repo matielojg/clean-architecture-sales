@@ -3,10 +3,11 @@
 echo "🔄 Parando todos os daemons do Gradle..."
 ./gradlew --stop
 
-echo "🔄 Limpando cache local do projeto..."
+echo "🧹 Limpando cache local do projeto..."
 rm -rf .gradle
+rm -rf build/ */build/
 
-echo "🛠️ Executando clean build..."
+echo "🛠️ Executando build com cache local..."
 ./gradlew clean build --build-cache
 
 if [ $? -ne 0 ]; then
@@ -15,4 +16,6 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "🚀 Iniciando aplicação (api-rest)..."
-./gradlew :api-rest:bootRun
+./gradlew :api-rest:bootRun -Dspring.profiles.active=dev
+
+# ./gradlew :api-rest:bootRun

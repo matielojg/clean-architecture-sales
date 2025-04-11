@@ -1,11 +1,11 @@
 package com.github.matielojg.revenda.core.domain.vo;
 
-import com.github.matielojg.revenda.core.domain.exception.CnpjInvalidoException;
+import com.github.matielojg.revenda.core.domain.exception.InvalidCnpjException;
 
-public record Cnpj(String valor) {
+public record Cnpj(String value) {
     public Cnpj {
-        if (!valor.matches("\\d{14}")) {
-            throw new CnpjInvalidoException("CNPJ inválido: " + valor);
+        if (!value.matches("\\d{14}")) {
+            throw new InvalidCnpjException("Invalid CNPJ : " + value);
         }
     }
 }

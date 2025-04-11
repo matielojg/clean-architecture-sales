@@ -2,6 +2,8 @@
 plugins {
     // Nenhum plugin aqui
 }
+extra["junitVersion"] = "5.10.0"
+extra["mockitoVersion"] = "5.10.0"
 
 allprojects {
     group = "com.github.matielojg"

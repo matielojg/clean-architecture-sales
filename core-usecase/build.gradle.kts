@@ -1,6 +1,3 @@
-extra["junitVersion"] = "5.10.0"
-extra["mockitoVersion"] = "5.10.0"
-
 plugins {
     java
 }

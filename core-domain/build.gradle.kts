@@ -1,7 +1,7 @@
 plugins {
-    kotlin("jvm") apply false
+    java
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
+    
 }

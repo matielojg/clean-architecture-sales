@@ -1,0 +1,34 @@
+services:
+  sonarqube:
+    image: sonarqube:community
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+    networks:
+      - sonar-network
+
+  postgres:
+    image: postgres:15
+    container_name: sonarqube_postgres
+    environment:
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+      POSTGRES_DB: sonarqube
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - sonar-network
+
+volumes:
+  sonarqube_data:
+  sonarqube_extensions:
+  pg_data:
+
+networks:
+  sonar-network:
+    driver: bridge

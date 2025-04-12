@@ -6,24 +6,30 @@ plugins {
     application
 }
 
+val springBootVersion = rootProject.extra["springBootVersion"] as String
+val junitVersion = rootProject.extra["junitVersion"] as String
+val assertjVersion = rootProject.extra["assertjVersion"] as String
+
 dependencies {
-    // Projetos locais
+    // Módulos do projeto
     implementation(project(":core-domain"))
     implementation(project(":core-usecase"))
     implementation(project(":core-gateway"))
     implementation(project(":adapter-repository-jpa"))
     implementation(project(":adapter-gateway-receita"))
     implementation(project(":adapter-gateway-api"))
-
-    // Bibliotecas externas - Spring
-    implementation("org.springframework.boot:spring-boot-starter")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-
     // Banco em memória
     implementation("com.h2database:h2")
+    // Spring Boot
+    implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
 
-    // Testes
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    // Testes de integração
+    testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+    testImplementation("org.assertj:assertj-core:$assertjVersion")
+
+    // Banco em memória
+    testRuntimeOnly("com.h2database:h2")
 }
 
 application {
@@ -33,4 +39,8 @@ application {
 tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
     enabled = true
     mainClass.set("com.github.matielojg.revenda.RevendaPedidosApiApplication")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }

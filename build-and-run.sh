@@ -11,7 +11,11 @@ echo "🛠️ Executando build com cache local..."
 ./gradlew clean build --build-cache
 
 if [ $? -ne 0 ]; then
-    echo "❌ Build falhou. Verifique o erro acima."
+    echo "❌ Build falhou. Vou limpar o cache e tentar executar novamente."
+    ./gradlew clean --refresh-dependencies
+    echo "Tentando executar novamente."
+    ./gradlew :api-rest:bootRun -Dspring.profiles.active=dev
+    echo "❌ Build falhou mesmo."
     exit 1
 fi
 

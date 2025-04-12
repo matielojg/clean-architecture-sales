@@ -6,6 +6,9 @@ extra["junitVersion"] = "5.10.0"
 extra["mockitoVersion"] = "5.10.0"
 extra["lombokVersion"] = "1.18.36"
 extra["springBootVersion"] = "3.4.4"
+extra["assertjVersion"] = "3.27.3"
+
+
 
 allprojects {
     group = "com.github.matielojg"

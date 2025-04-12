@@ -14,12 +14,12 @@ if [ $? -ne 0 ]; then
     echo "❌ Build falhou. Vou limpar o cache e tentar executar novamente."
     ./gradlew clean --refresh-dependencies
     echo "Tentando executar novamente."
-    ./gradlew :api-rest:bootRun -Dspring.profiles.active=dev
+    ./gradlew :resale-api-rest:bootRun -Dspring.profiles.active=dev
     echo "❌ Build falhou mesmo."
     exit 1
 fi
 
 echo "🚀 Iniciando aplicação (api-rest)..."
-./gradlew :api-rest:bootRun -Dspring.profiles.active=dev
+./gradlew :resale-api-rest:bootRun -Dspring.profiles.active=dev
 
 # ./gradlew :api-rest:bootRun

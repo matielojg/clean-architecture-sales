@@ -20,10 +20,20 @@ dependencyResolutionManagement {
 
 rootProject.name = "revenda-pedidos-api"
 
-include("core-domain")
-include("core-usecase")
-include("core-gateway")
-include("adapter-repository-jpa")
-include("adapter-gateway-receita")
-include("adapter-gateway-api")
-include("api-rest")
+include(
+    "resale-core-domain",
+    "resale-core-usecase",
+    "resale-core-gateway",
+    "resale-adapter-repository-jpa",
+    "resale-adapter-gateway-validator",
+    "resale-adapter-gateway-api",
+    "resale-api-rest",
+
+
+    "salesorder-core-domain",
+    "salesorder-core-usecase",
+    "salesorder-core-gateway",
+    "salesorder-adapter-repository-jpa",
+    "salesorder-adapter-gateway-distributor",
+    "salesorder-api-rest"
+)

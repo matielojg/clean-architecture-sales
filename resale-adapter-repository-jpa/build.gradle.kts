@@ -10,8 +10,8 @@ repositories {
 
 dependencies {
     // Projetos locais
-    implementation(project(":core-domain"))
-    implementation(project(":core-gateway"))
+    implementation(project(":resale-core-domain"))
+    implementation(project(":resale-core-gateway"))
 
     // Bibliotecas externas
     val springBootVersion = rootProject.extra["springBootVersion"] as String

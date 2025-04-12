@@ -12,12 +12,12 @@ val assertjVersion = rootProject.extra["assertjVersion"] as String
 
 dependencies {
     // Módulos do projeto
-    implementation(project(":core-domain"))
-    implementation(project(":core-usecase"))
-    implementation(project(":core-gateway"))
-    implementation(project(":adapter-repository-jpa"))
-    implementation(project(":adapter-gateway-receita"))
-    implementation(project(":adapter-gateway-api"))
+    implementation(project(":resale-core-domain"))
+    implementation(project(":resale-core-usecase"))
+    implementation(project(":resale-core-gateway"))
+    implementation(project(":resale-adapter-repository-jpa"))
+    implementation(project(":resale-adapter-gateway-validator"))
+    implementation(project(":resale-adapter-gateway-api"))
     // Banco em memória
     implementation("com.h2database:h2")
     // Spring Boot

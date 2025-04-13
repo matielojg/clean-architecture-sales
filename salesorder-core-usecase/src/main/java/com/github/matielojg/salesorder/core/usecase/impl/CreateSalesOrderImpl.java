@@ -8,7 +8,6 @@ import com.github.matielojg.salesorder.core.usecase.CreateSalesOrder;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class CreateSalesOrderImpl implements CreateSalesOrder {
 
@@ -25,7 +24,7 @@ public class CreateSalesOrderImpl implements CreateSalesOrder {
     public SalesOrder execute(UUID resellerId, List<ItemInput> items) {
         List<SalesOrderItem> domainItems = items.stream()
                 .map(i -> new SalesOrderItem(i.skuCode(), i.quantity()))
-                .collect(Collectors.toList());
+                .toList();
 
         SalesOrder order = new SalesOrder(resellerId, domainItems);
 

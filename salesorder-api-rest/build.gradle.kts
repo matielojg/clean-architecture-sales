@@ -14,6 +14,7 @@ dependencies {
     implementation(project(":salesorder-core-domain"))
     implementation(project(":salesorder-adapter-repository-jpa"))
     implementation(project(":salesorder-adapter-gateway-distributor"))
+    implementation(project(":salesorder-adapter-gateway-logger"))
 
     val springBootVersion = rootProject.extra["springBootVersion"] as String
     implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")

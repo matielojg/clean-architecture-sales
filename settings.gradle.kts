@@ -35,5 +35,7 @@ include(
     "salesorder-core-usecase",
     "salesorder-adapter-repository-jpa",
     "salesorder-adapter-gateway-distributor",
-    "salesorder-api-rest"
+    "salesorder-api-rest",
+    "salesorder-adapter-gateway-logger"
+
 )

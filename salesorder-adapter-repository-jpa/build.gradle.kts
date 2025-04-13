@@ -19,9 +19,14 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
     implementation("jakarta.persistence:jakarta.persistence-api:$jakartaPersistenceVersion")
 
+    val h2DatabaseVersion = rootProject.extra["h2DatabaseVersion"] as String
+    testImplementation("com.h2database:h2:$h2DatabaseVersion")
     // ✅ dependências para testes de integração
     testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
     testImplementation("org.testcontainers:junit-jupiter:$testcontainersVersion") //last version 1.20.6
     testImplementation("org.testcontainers:postgresql:$testcontainersVersion")
     testImplementation("org.assertj:assertj-core:$assertjVersion")
+}
+tasks.test {
+    useJUnitPlatform()
 }

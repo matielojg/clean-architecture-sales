@@ -23,6 +23,9 @@ dependencies {
     // Spring Boot
     implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
 
+    val springDocOpenapiVersion = rootProject.extra["springDocOpenapiVersion"] as String
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocOpenapiVersion")
+
     // Testes de integração
     testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")

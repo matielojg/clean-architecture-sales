@@ -3,11 +3,14 @@ plugins {
 }
 
 extra["junitVersion"] = "5.10.0"
+extra["junitPlatformLauncherVersion"] = "1.12.1"
 extra["mockitoVersion"] = "5.10.0"
 extra["lombokVersion"] = "1.18.36"
 extra["springBootVersion"] = "3.4.4"
 extra["assertjVersion"] = "3.27.3"
-
+extra["slf4jVersion"] = "2.0.17"
+extra["jakartaPersistenceVersion"] = "3.1.0"
+extra["h2DatabaseVersion"] = "2.2.224"
 
 
 allprojects {

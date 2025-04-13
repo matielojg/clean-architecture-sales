@@ -31,8 +31,8 @@ include(
 
 
     "salesorder-core-domain",
-    "salesorder-core-usecase",
     "salesorder-core-gateway",
+    "salesorder-core-usecase",
     "salesorder-adapter-repository-jpa",
     "salesorder-adapter-gateway-distributor",
     "salesorder-api-rest"

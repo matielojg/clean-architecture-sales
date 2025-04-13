@@ -27,9 +27,6 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
     testImplementation("org.assertj:assertj-core:$assertjVersion")
-
-    // Banco em memória
-    testRuntimeOnly("com.h2database:h2")
 }
 
 application {

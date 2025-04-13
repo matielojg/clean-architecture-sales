@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ResellerRepositoryJpa implements ResellerRepository {
 
-    private final ResellerRepositorySpringData repository;
+    private final SpringDataResellerRepository repository;
 
-    public ResellerRepositoryJpa(ResellerRepositorySpringData repository) {
+    public ResellerRepositoryJpa(SpringDataResellerRepository repository) {
         this.repository = repository;
     }
 

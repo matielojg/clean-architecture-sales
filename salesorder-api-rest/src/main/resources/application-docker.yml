@@ -11,4 +11,4 @@ spring:
     console.enabled: false
 
 distributor:
-  url: http://distributor-mock:8080
+  url: http://distributor-mock:8081

@@ -7,7 +7,15 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+    show-sql: true
     open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
 
 distributor:
   url: http://localhost:8081

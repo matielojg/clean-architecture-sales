@@ -44,7 +44,7 @@ services:
     image: halverneus/static-file-server
     container_name: distributor_mock
     ports:
-      - "8081:8080"
+      - "8082:8080"
     volumes:
       - ./distributor-mock:/web
     networks:

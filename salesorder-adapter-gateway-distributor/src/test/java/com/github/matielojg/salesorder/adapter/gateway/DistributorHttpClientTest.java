@@ -6,6 +6,7 @@ import com.github.matielojg.salesorder.core.domain.exception.DistributorUnavaila
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -49,9 +50,10 @@ class DistributorHttpClientTest {
                 List.of(new SalesOrderItem("SKU-OK", 1000))
         );
 
-        // mocka resposta 200 OK
+        @SuppressWarnings("unchecked")
+        ResponseEntity<Void> mockedResponse = mock(ResponseEntity.class);
         when(restTemplate.postForEntity(anyString(), any(HttpEntity.class), eq(Void.class)))
-                .thenReturn(mock(org.springframework.http.ResponseEntity.class));
+                .thenReturn(mockedResponse);
 
         // execução não deve lançar exceção
         client.send(order);

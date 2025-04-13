@@ -3,26 +3,28 @@ package com.github.matielojg.salesorder.api.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.matielojg.salesorder.api.controller.model.SalesOrderRequest;
 import com.github.matielojg.salesorder.api.controller.model.SalesOrderRequest.ItemRequest;
+import com.github.matielojg.salesorder.api.controller.model.SalesOrderResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import(MockDistributorController.class)
 class SalesOrderControllerIT {
 
     private final RestTemplate restTemplate = new RestTemplate();
+
     @LocalServerPort
     private int port;
     @Autowired
@@ -44,19 +46,20 @@ class SalesOrderControllerIT {
                 objectMapper.writeValueAsString(request), headers
         );
 
-        try {
-            ResponseEntity<String> response = restTemplate.postForEntity(
-                    "http://localhost:" + port + "/api/sales-orders",
-                    httpRequest,
-                    String.class
-            );
-            System.out.println("✅ Response body: " + response.getBody());
+        String url = "http://localhost:" + port + "/api/sales-orders";
+        ResponseEntity<SalesOrderResponse> response = restTemplate.exchange(
+                url,
+                HttpMethod.POST,
+                httpRequest,
+                SalesOrderResponse.class
+        );
 
-        } catch (HttpServerErrorException e) {
-            System.out.println("❌ 500 ERROR BODY:");
-            System.out.println(e.getResponseBodyAsString()); // <== aqui vai vir a exceção real
-            throw e;
-        }
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(Objects.requireNonNull(response.getBody()).getOrderId()).isNotNull();
+        List<SalesOrderResponse.ItemResponse> items = response.getBody().getItems();
+        assertThat(items).hasSize(2);
+
     }
 
     private ItemRequest createItem(String sku, int qty) {
@@ -65,4 +68,17 @@ class SalesOrderControllerIT {
         item.setQuantity(qty);
         return item;
     }
+
+    @Test
+    void shouldReturnEmptyListWhenNoSalesOrderWithGivenStatus() {
+        ResponseEntity<SalesOrderResponse[]> response = restTemplate.getForEntity(
+                "http://localhost:" + port + "/api/sales-orders?status=SENT",
+                SalesOrderResponse[].class
+        );
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody()).isEmpty();
+    }
+
 }

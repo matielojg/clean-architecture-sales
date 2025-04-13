@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class SalesOrderResponse {
-    private UUID orderId;
-    private List<ItemResponse> items;
+    private final UUID orderId;
+    private final List<ItemResponse> items;
 
     public SalesOrderResponse(UUID orderId, List<ItemResponse> items) {
         this.orderId = orderId;

@@ -28,27 +28,44 @@ public class DistributorHttpClient implements DistributorGateway {
 
     @Override
     public void send(SalesOrder order) {
-        try {
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+        int attempts = 0;
+        int maxAttempts = 3;
 
-            Map<String, Object> body = new HashMap<>();
-            body.put("orderId", order.getId());
-            body.put("resellerId", order.getResellerId());
-            body.put("items", order.getItems());
+        while (true) {
+            try {
+                attempts++;
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
 
-            HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
+                Map<String, Object> body = new HashMap<>();
+                body.put("orderId", order.getId());
+                body.put("resellerId", order.getResellerId());
+                body.put("items", order.getItems());
 
-            ResponseEntity<Void> response = restTemplate.postForEntity(distributorUrl + "/api/orders", request, Void.class);
+                HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
 
-            log.info("Sales order {} sent successfully to distributor. Status: {}", order.getId(), response.getStatusCode());
+                ResponseEntity<Void> response = restTemplate.postForEntity(distributorUrl + "/api/orders", request, Void.class);
 
-        } catch (Exception ex) {
-            String errorMessage = String.format(
-                    "Failed to send sales order %s to distributor: %s",
-                    order.getId(), ex.getMessage()
-            );
-            throw new DistributorUnavailableException(errorMessage, ex); // Relança com contexto
+                log.info("Sales order {} sent successfully to distributor. Status: {}", order.getId(), response.getStatusCode());
+                return; // se deu certo, sai do while
+
+            } catch (Exception ex) {
+                log.warn("Attempt {} to send sales order {} failed: {}", attempts, order.getId(), ex.getMessage());
+
+                if (attempts >= maxAttempts) {
+                    throw new DistributorUnavailableException(
+                            String.format("Failed to send sales order %s to distributor after %d attempts", order.getId(), attempts),
+                            ex
+                    );
+                }
+
+                try {
+                    Thread.sleep(1000L * attempts); // backoff simples
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                }
+            }
         }
     }
+
 }

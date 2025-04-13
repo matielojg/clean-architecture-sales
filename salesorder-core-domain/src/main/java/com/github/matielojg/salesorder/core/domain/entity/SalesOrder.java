@@ -1,7 +1,7 @@
 package com.github.matielojg.salesorder.core.domain.entity;
 
-import com.github.matielojg.salesorder.core.domain.vo.OrderStatus;
 import com.github.matielojg.salesorder.core.domain.exception.InvalidSalesOrderException;
+import com.github.matielojg.salesorder.core.domain.vo.SalesOrderStatus;
 
 import java.util.Collections;
 import java.util.List;
@@ -12,7 +12,14 @@ public class SalesOrder {
     private final UUID id;
     private final UUID resellerId;
     private final List<SalesOrderItem> items;
-    private OrderStatus status;
+    private SalesOrderStatus status;
+
+    public SalesOrder(UUID id, UUID resellerId, List<SalesOrderItem> items, SalesOrderStatus status) {
+        this.id = id;
+        this.resellerId = resellerId;
+        this.items = Collections.unmodifiableList(items);
+        this.status = status;
+    }
 
     public SalesOrder(UUID resellerId, List<SalesOrderItem> items) {
         if (resellerId == null) {
@@ -33,7 +40,7 @@ public class SalesOrder {
         this.id = UUID.randomUUID();
         this.resellerId = resellerId;
         this.items = Collections.unmodifiableList(items);
-        this.status = OrderStatus.CREATED;
+        this.status = SalesOrderStatus.CREATED;
     }
 
     public UUID getId() {
@@ -48,11 +55,11 @@ public class SalesOrder {
         return items;
     }
 
-    public OrderStatus getStatus() {
+    public SalesOrderStatus getStatus() {
         return status;
     }
 
     public void markAsSent() {
-        this.status = OrderStatus.SENT;
+        this.status = SalesOrderStatus.SENT;
     }
 }

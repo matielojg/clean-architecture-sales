@@ -11,15 +11,22 @@ echo "🛠️ Executando build com cache local..."
 ./gradlew clean build --build-cache
 
 if [ $? -ne 0 ]; then
-    echo "❌ Build falhou. Vou limpar o cache e tentar executar novamente."
-    ./gradlew clean --refresh-dependencies
-    echo "Tentando executar novamente."
-    ./gradlew :resale-api-rest:bootRun -Dspring.profiles.active=dev
-    echo "❌ Build falhou mesmo."
+    echo "❌ Build falhou."
     exit 1
 fi
 
-echo "🚀 Iniciando aplicação (api-rest)..."
-./gradlew :resale-api-rest:bootRun -Dspring.profiles.active=dev
+echo "🚀 Iniciando módulos da aplicação..."
 
-# ./gradlew :api-rest:bootRun
+# Start resale-api-rest em background
+./gradlew :resale-api-rest:bootRun -Dspring.profiles.active=dev &
+PID_RESALE=$!
+
+# Start salesorder-api-rest em background com resources corretos
+./gradlew :salesorder-api-rest:bootRun -Dspring.profiles.active=dev \
+    -Dspring.config.location=classpath:/application.yml &
+PID_SALESORDER=$!
+
+# Espera CTRL+C e mata os processos
+trap "echo '🛑 Encerrando apps...'; kill $PID_RESALE $PID_SALESORDER" SIGINT
+
+wait

@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: test
+
+  jpa:
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  h2:
+    console:
+      enabled: true
+
+distributor:
+  url: http://localhost:8081

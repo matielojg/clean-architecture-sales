@@ -12,7 +12,7 @@ services:
     networks:
       - sonar-network
 
-  postgres:
+  sonarqube_postgres:
     image: postgres:15
     container_name: sonarqube_postgres
     environment:
@@ -23,11 +23,39 @@ services:
       - pg_data:/var/lib/postgresql/data
     networks:
       - sonar-network
+    expose:
+      - "5432"
+
+  salesorder_postgres:
+    image: postgres:15
+    container_name: salesorder_postgres
+    environment:
+      POSTGRES_DB: salesorder
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - salesorder_pg_data:/var/lib/postgresql/data
+    networks:
+      - sonar-network
+
+  distributor-mock:
+    image: halverneus/static-file-server
+    container_name: distributor_mock
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./distributor-mock:/web
+    networks:
+      - sonar-network
+
 
 volumes:
   sonarqube_data:
   sonarqube_extensions:
   pg_data:
+  salesorder_pg_data:
 
 networks:
   sonar-network:

@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://salesorder_postgres:5432/salesorder
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  h2:
+    console.enabled: false
+
+distributor:
+  url: http://distributor-mock:8080

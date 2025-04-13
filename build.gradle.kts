@@ -11,6 +11,7 @@ extra["assertjVersion"] = "3.27.3"
 extra["slf4jVersion"] = "2.0.17"
 extra["jakartaPersistenceVersion"] = "3.1.0"
 extra["h2DatabaseVersion"] = "2.2.224"
+extra["testcontainersVersion"] = "1.20.6"
 
 
 allprojects {

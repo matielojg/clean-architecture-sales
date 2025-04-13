@@ -1,6 +1,6 @@
 package com.github.matielojg.salesorder.core.domain.vo;
 
-public enum OrderStatus {
+public enum SalesOrderStatus {
     CREATED,
     SENT,
     FAILED

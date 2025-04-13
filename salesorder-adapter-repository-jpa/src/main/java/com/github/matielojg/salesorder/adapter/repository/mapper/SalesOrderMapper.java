@@ -1,12 +1,13 @@
 package com.github.matielojg.salesorder.adapter.repository.mapper;
 
-import com.github.matielojg.salesorder.adapter.repository.entity.*;
+import com.github.matielojg.salesorder.adapter.repository.entity.OrderStatusEntity;
+import com.github.matielojg.salesorder.adapter.repository.entity.SalesOrderEntity;
+import com.github.matielojg.salesorder.adapter.repository.entity.SalesOrderItemEntity;
 import com.github.matielojg.salesorder.core.domain.entity.SalesOrder;
 import com.github.matielojg.salesorder.core.domain.entity.SalesOrderItem;
-import com.github.matielojg.salesorder.core.domain.vo.OrderStatus;
+import com.github.matielojg.salesorder.core.domain.vo.SalesOrderStatus;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SalesOrderMapper {
 
@@ -26,9 +27,15 @@ public class SalesOrderMapper {
             itemEntity.setQuantity(item.getQuantity());
             itemEntity.setSalesOrder(entity);
             return itemEntity;
-        }).collect(Collectors.toList());
+        }).toList();
 
         entity.setItems(items);
         return entity;
+    }
+
+    public static SalesOrder toDomain(SalesOrderEntity entity) {
+        List<SalesOrderItem> items = entity.getItems().stream().map(item -> new SalesOrderItem(item.getSkuCode(), item.getQuantity())).toList();
+
+        return new SalesOrder(entity.getId(), entity.getResellerId(), items, SalesOrderStatus.valueOf(entity.getStatus().name()));
     }
 }

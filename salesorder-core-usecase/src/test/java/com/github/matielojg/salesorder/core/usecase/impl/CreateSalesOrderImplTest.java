@@ -1,6 +1,7 @@
 package com.github.matielojg.salesorder.core.usecase.impl;
 
 import com.github.matielojg.salesorder.core.domain.entity.SalesOrder;
+import com.github.matielojg.salesorder.core.gateway.LoggerGateway;
 import com.github.matielojg.salesorder.core.gateway.SalesOrderRepository;
 import com.github.matielojg.salesorder.core.gateway.DistributorGateway;
 import com.github.matielojg.salesorder.core.usecase.CreateSalesOrder;
@@ -18,12 +19,14 @@ class CreateSalesOrderImplTest {
     private SalesOrderRepository salesOrderRepository;
     private DistributorGateway distributorGateway;
     private CreateSalesOrder createSalesOrder;
+    private LoggerGateway log;
 
     @BeforeEach
     void setUp() {
         salesOrderRepository = mock(SalesOrderRepository.class);
         distributorGateway = mock(DistributorGateway.class);
-        createSalesOrder = new CreateSalesOrderImpl(salesOrderRepository, distributorGateway);
+        log = mock(LoggerGateway.class);
+        createSalesOrder = new CreateSalesOrderImpl(salesOrderRepository, distributorGateway,log);
     }
 
     @Test

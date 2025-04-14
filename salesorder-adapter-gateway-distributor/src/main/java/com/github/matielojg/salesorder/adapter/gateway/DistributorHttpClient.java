@@ -1,6 +1,7 @@
 package com.github.matielojg.salesorder.adapter.gateway;
 
 import com.github.matielojg.salesorder.core.domain.entity.SalesOrder;
+import com.github.matielojg.salesorder.core.domain.exception.DistributorUnavailableException;
 import com.github.matielojg.salesorder.core.gateway.DistributorGateway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +10,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.retry.RetryCallback;
 import org.springframework.retry.backoff.ExponentialBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
@@ -45,22 +45,34 @@ public class DistributorHttpClient implements DistributorGateway {
         retryTemplate.setBackOffPolicy(backOffPolicy);
     }
 
+    @Override
     public void send(SalesOrder order) {
-        retryTemplate.execute((RetryCallback<Void, RuntimeException>) context -> {
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+        retryTemplate.execute(
+                context -> {
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.setContentType(MediaType.APPLICATION_JSON);
 
-            Map<String, Object> body = new HashMap<>();
-            body.put("orderId", order.getId());
-            body.put("resellerId", order.getResellerId());
-            body.put("items", order.getItems());
+                    Map<String, Object> body = new HashMap<>();
+                    body.put("orderId", order.getId());
+                    body.put("resellerId", order.getResellerId());
+                    body.put("items", order.getItems());
 
-            HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
+                    HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
 
-            ResponseEntity<Void> response = restTemplate.postForEntity(distributorUrl + "/api/orders", request, Void.class);
-            log.info("Sales order {} sent successfully to distributor. Status: {}", order.getId(), response.getStatusCode());
+                    ResponseEntity<Void> response = restTemplate.postForEntity(
+                            distributorUrl + "/api/orders", request, Void.class);
 
-            return null;
-        });
+                    log.info("Sales order {} sent successfully to distributor. Status: {}", order.getId(), response.getStatusCode());
+
+                    return null;
+                },
+                context -> {
+                    Throwable lastThrowable = context.getLastThrowable();
+                    throw new DistributorUnavailableException(
+                            String.format("Failed to send sales order %s to distributor after retries", order.getId()),
+                            lastThrowable != null ? lastThrowable : new RuntimeException("Unknown error")
+                    );
+                }
+        );
     }
 }

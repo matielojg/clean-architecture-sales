@@ -24,15 +24,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SalesOrderControllerIT {
 
     @LocalServerPort
-    private final int port;
+    @SuppressWarnings("unused")
+    private int port;
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
+    @SuppressWarnings("unused")
     private ObjectMapper objectMapper;
 
-    SalesOrderControllerIT(int port) {
-        this.port = port;
-    }
 
     @Test
     void shouldCreateSalesOrderSuccessfully() throws Exception {

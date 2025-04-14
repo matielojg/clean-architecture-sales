@@ -54,10 +54,10 @@ class SalesOrderControllerIT {
                 SalesOrderResponse.class
         );
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(response.getBody()).isNotNull();
-        assertThat(Objects.requireNonNull(response.getBody()).getOrderId()).isNotNull();
-        List<SalesOrderResponse.ItemResponse> items = response.getBody().getItems();
+        assertThat(Objects.requireNonNull(response.getBody()).orderId()).isNotNull();
+        List<SalesOrderResponse.ItemResponse> items = response.getBody().items();
         assertThat(items).hasSize(2);
 
     }

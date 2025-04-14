@@ -51,8 +51,6 @@ class SalesOrderRepositoryJpaIT {
         em.clear();
 
         SalesOrderEntity updated = em.find(SalesOrderEntity.class, orderId);
-        System.out.println("🔎 Status after update: " + updated.getStatus()); // debug temporário
-
         assertThat(updated.getStatus()).isEqualTo(OrderStatusEntity.SENT);
     }
 

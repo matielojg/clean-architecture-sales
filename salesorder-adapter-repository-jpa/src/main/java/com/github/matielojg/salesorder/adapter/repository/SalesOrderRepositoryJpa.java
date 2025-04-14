@@ -33,12 +33,11 @@ public class SalesOrderRepositoryJpa implements SalesOrderRepository {
 
     @Override
     public List<SalesOrder> findByStatus(SalesOrderStatus status) {
-        return em.createQuery("SELECT o FROM SalesOrderEntity o WHERE o.status = :status", SalesOrderEntity.class)
-                .setParameter("status", OrderStatusEntity.valueOf(status.name()))
-                .getResultList()
-                .stream()
-                .map(SalesOrderMapper::toDomain)
-                .toList();
+        OrderStatusEntity statusEntity = OrderStatusEntity.valueOf(status.name());
+
+        List<SalesOrderEntity> entities = repository.findByStatusWithItems(statusEntity);
+
+        return entities.stream().map(SalesOrderMapper::toDomain).toList();
     }
 
     @Override

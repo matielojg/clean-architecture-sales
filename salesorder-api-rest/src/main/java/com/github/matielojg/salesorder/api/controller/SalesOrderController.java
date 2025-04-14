@@ -14,11 +14,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/sales-orders")
+@SuppressWarnings("unused")
 public class SalesOrderController implements SalesOrderApi {
 
     private final CreateSalesOrder createSalesOrder;
     private final SalesOrderRepository repository;
 
+    @SuppressWarnings("unused")
     public SalesOrderController(CreateSalesOrder createSalesOrder, SalesOrderRepository repository) {
         this.createSalesOrder = createSalesOrder;
         this.repository = repository;
@@ -31,7 +33,7 @@ public class SalesOrderController implements SalesOrderApi {
         return orders.stream().map(order -> new SalesOrderResponse(
                 order.getId(), order.getItems().stream()
                 .map(i -> new SalesOrderResponse.ItemResponse(
-                        i.getSkuCode(), i.getQuantity())).toList())).toList();
+                        i.skuCode(), i.quantity())).toList())).toList();
     }
 
     @Override

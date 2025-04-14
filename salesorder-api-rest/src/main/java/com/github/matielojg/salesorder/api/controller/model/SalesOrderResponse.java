@@ -18,7 +18,7 @@ public record SalesOrderResponse(
 
     public static SalesOrderResponse fromDomain(SalesOrder order) {
         List<ItemResponse> itemResponses = order.getItems().stream()
-                .map(i -> new ItemResponse(i.getSkuCode(), i.getQuantity()))
+                .map(i -> new ItemResponse(i.skuCode(), i.quantity()))
                 .toList();
 
         return new SalesOrderResponse(order.getId(), itemResponses);

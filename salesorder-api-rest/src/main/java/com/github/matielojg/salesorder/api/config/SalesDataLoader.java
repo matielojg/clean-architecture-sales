@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 @Component
 @Profile({"dev", "docker"})
@@ -19,6 +20,8 @@ public class SalesDataLoader implements CommandLineRunner {
     public SalesDataLoader(SalesOrderRepository repository) {
         this.repository = repository;
     }
+
+    private static final Logger log = Logger.getLogger(SalesDataLoader.class.getName());
 
     @Override
     public void run(String... args) {
@@ -35,7 +38,7 @@ public class SalesDataLoader implements CommandLineRunner {
             SalesOrder order = new SalesOrder(resellerId, items);
             repository.save(order);
 
-            System.out.println("✅ Pedido gerado: " + order.getId());
+            log.info("✅ Pedido gerado: " + order.getId());
         }
     }
 }

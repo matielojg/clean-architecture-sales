@@ -23,12 +23,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Import(MockDistributorController.class)
 class SalesOrderControllerIT {
 
+    @LocalServerPort
+    private final int port;
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @LocalServerPort
-    private int port;
     @Autowired
     private ObjectMapper objectMapper;
+
+    SalesOrderControllerIT(int port) {
+        this.port = port;
+    }
 
     @Test
     void shouldCreateSalesOrderSuccessfully() throws Exception {

@@ -13,10 +13,10 @@ public class GlobalExceptionLogger {
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionLogger.class);
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleAnyException(Exception ex) {
-        // Loga tudo no console
+    public ResponseEntity<String> handleAnyException(Exception ex) {
+
         logger.error("Caught exception in ControllerAdvice: ", ex);
-        // Retorna um JSON simples para debug
+
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Server error: " + ex.getMessage());

@@ -1,9 +1,6 @@
-# ![Beer mug](salesorder-api-rest/src/main/resources/static/favicon.ico) Revenda Pedidos – Monorepo 
+# ![Beer mug representing the Sales Order module](salesorder-api-rest/src/main/resources/static/favicon.ico) Revenda Pedidos – Monorepo 
 
 ## [Evidências dos entregáveis](docs/EVIDENCES.md)
-
-
-![🍺Beer mug representing the Sales Order module](salesorder-api-rest/src/main/resources/static/favicon.ico)
 
 Este repositório contém a base do sistema de revenda e processamento de pedidos. Está organizado como **monorepo modularizado**, mas com estrutura pronta para futura **extração de microserviços independentes** (`resale`, `salesorder`, etc).
 m@tielo:~/Documents/Projetos/desafio_revenda/revenda-pedidos-api$ git pull origin main

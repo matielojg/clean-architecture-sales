@@ -10,8 +10,7 @@ import org.springframework.web.client.RestTemplate;
 public class DistributorGatewayConfig {
 
     @Bean
-    public DistributorGateway distributorGateway(RestTemplate restTemplate,
-                                                 @Value("${distributor.url}") String url) {
+    public DistributorGateway distributorGateway(RestTemplate restTemplate, @Value("${distributor.url}") String url) {
         return new DistributorHttpClient(restTemplate, url);
     }
 }

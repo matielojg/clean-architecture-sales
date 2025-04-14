@@ -18,15 +18,3 @@ spring:
 
 distributor:
   url: http://localhost:8082
-
-logging:
-  level:
-    root: DEBUG
-    org.springframework.boot.web.servlet.error.BasicErrorController: TRACE
-    com.github.matielojg.salesorder.api: TRACE
-
-server:
-  error:
-    include-message: always
-    include-binding-errors: always
-    include-stacktrace: always

@@ -30,7 +30,7 @@ public class SalesOrder {
         }
 
         int totalQuantity = items.stream()
-                .mapToInt(SalesOrderItem::getQuantity)
+                .mapToInt(SalesOrderItem::quantity)
                 .sum();
 
         if (totalQuantity < 1000) {

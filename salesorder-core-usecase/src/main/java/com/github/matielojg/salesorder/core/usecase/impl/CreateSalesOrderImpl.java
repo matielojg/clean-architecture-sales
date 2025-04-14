@@ -26,9 +26,6 @@ public class CreateSalesOrderImpl implements CreateSalesOrder {
 
     @Override
     public SalesOrder execute(UUID resellerId, List<ItemInput> items) {
-        log.debug("➡️ Executando CreateSalesOrderImpl");
-        log.debug("📦 Reseller ID: {}", resellerId);
-        log.debug("📦 Itens recebidos: {}", items);
 
         if (resellerId == null || items == null || items.isEmpty()) {
             throw new IllegalArgumentException("Reseller ID e itens são obrigatórios");

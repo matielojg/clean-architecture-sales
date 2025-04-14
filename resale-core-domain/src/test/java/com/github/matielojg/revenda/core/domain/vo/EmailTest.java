@@ -9,31 +9,31 @@ class EmailTest {
 
     @Test
     void shouldCreateValidEmail() {
-        Email email = new Email("valid@email.com");
+        EmailAddress email = new EmailAddress("valid@email.com");
         assertEquals("valid@email.com", email.value());
     }
 
     @Test
     void shouldThrowExceptionForInvalidEmail() {
-        assertThrows(InvalidEmailException.class, () -> new Email("invalid"));
+        assertThrows(InvalidEmailException.class, () -> new EmailAddress("invalid"));
     }
     @Test
     void shouldThrowExceptionForNullEmail() {
-        assertThrows(InvalidEmailException.class, () -> new Email(null));
+        assertThrows(InvalidEmailException.class, () -> new EmailAddress(null));
     }
 
     @Test
     void shouldThrowExceptionForEmptyEmail() {
-        assertThrows(InvalidEmailException.class, () -> new Email(""));
+        assertThrows(InvalidEmailException.class, () -> new EmailAddress(""));
     }
 
     @Test
     void shouldThrowExceptionForEmailWithoutDomain() {
-        assertThrows(InvalidEmailException.class, () -> new Email("user@"));
+        assertThrows(InvalidEmailException.class, () -> new EmailAddress("user@"));
     }
 
     @Test
     void shouldThrowExceptionForEmailWithSpaces() {
-        assertThrows(InvalidEmailException.class, () -> new Email("invalid email@email.com"));
+        assertThrows(InvalidEmailException.class, () -> new EmailAddress("invalid email@email.com"));
     }
 }

@@ -2,7 +2,7 @@ package com.github.matielojg.revenda.core.usecase.impl;
 
 import com.github.matielojg.revenda.core.domain.entity.Reseller;
 import com.github.matielojg.revenda.core.domain.vo.Cnpj;
-import com.github.matielojg.revenda.core.domain.vo.Email;
+import com.github.matielojg.revenda.core.domain.vo.EmailAddress;
 import com.github.matielojg.revenda.core.gateway.ResellerRepository;
 import com.github.matielojg.revenda.core.usecase.RegisterReseller;
 
@@ -18,8 +18,9 @@ public class RegisterResellerImpl implements RegisterReseller {
 
     // sobrecarga para receber dados simples direto do controller
     @Override
-    public void execute(Reseller reseller) {
+    public Reseller execute(Reseller reseller) {
         repository.save(reseller);
+        return reseller;
     }
 
     @SuppressWarnings("unused")
@@ -28,7 +29,7 @@ public class RegisterResellerImpl implements RegisterReseller {
                 UUID.randomUUID(),
                 new Cnpj(cnpj),
                 name,
-                new Email(email)
+                new EmailAddress(email)
         );
         execute(reseller);
     }

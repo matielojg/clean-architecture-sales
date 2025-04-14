@@ -1,40 +1,39 @@
 package com.github.matielojg.salesorder.api.controller.model;
 
+import com.github.matielojg.salesorder.core.domain.entity.SalesOrder;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.List;
 import java.util.UUID;
 
-public class SalesOrderResponse {
-    private final UUID orderId;
-    private final List<ItemResponse> items;
+@Schema(description = "Response with created sales order data")
+public record SalesOrderResponse(
 
-    public SalesOrderResponse(UUID orderId, List<ItemResponse> items) {
-        this.orderId = orderId;
-        this.items = items;
+        @Schema(example = "3fa85f64-5717-4562-b3fc-2c963f66afa6")
+        UUID orderId,
+
+        @Schema(description = "List of items")
+        List<ItemResponse> items
+) {
+
+    public static SalesOrderResponse fromDomain(SalesOrder order) {
+        List<ItemResponse> itemResponses = order.getItems().stream()
+                .map(i -> new ItemResponse(i.skuCode(), i.quantity()))
+                .toList();
+
+        return new SalesOrderResponse(order.getId(), itemResponses);
     }
 
-    public UUID getOrderId() {
-        return orderId;
-    }
+    @Schema(description = "Item included in the sales order")
+    public record ItemResponse(
 
-    public List<ItemResponse> getItems() {
-        return items;
-    }
+            @Schema(description = "SKU code of the item", example = "SKU-123")
+            String skuCode,
 
-    public static class ItemResponse {
-        private final String skuCode;
-        private final int quantity;
+            @Schema(description = "Quantity of the item", example = "500")
+            int quantity
 
-        public ItemResponse(String skuCode, int quantity) {
-            this.skuCode = skuCode;
-            this.quantity = quantity;
-        }
-
-        public String getSkuCode() {
-            return skuCode;
-        }
-
-        public int getQuantity() {
-            return quantity;
-        }
+    ) {
     }
 }
+

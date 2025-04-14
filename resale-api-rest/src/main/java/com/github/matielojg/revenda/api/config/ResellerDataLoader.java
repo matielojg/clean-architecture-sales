@@ -3,7 +3,7 @@ package com.github.matielojg.revenda.api.config;
 
 import com.github.matielojg.revenda.core.domain.entity.Reseller;
 import com.github.matielojg.revenda.core.domain.vo.Cnpj;
-import com.github.matielojg.revenda.core.domain.vo.Email;
+import com.github.matielojg.revenda.core.domain.vo.EmailAddress;
 import com.github.matielojg.revenda.core.gateway.ResellerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +45,7 @@ public class ResellerDataLoader implements CommandLineRunner {
                     id,
                     new Cnpj(rawCnpj),
                     "Reseller " + i,
-                    new Email(rawEmail)
+                    new EmailAddress(rawEmail)
             );
 
             repository.save(reseller);

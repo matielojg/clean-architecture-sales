@@ -13,6 +13,7 @@ extra["jakartaPersistenceVersion"] = "3.1.0"
 extra["h2DatabaseVersion"] = "2.2.224"
 extra["testcontainersVersion"] = "1.20.6"
 extra["springDocOpenapiVersion"] = "2.8.6"
+extra["retrySpringVersion"] = "2.0.11"
 
 allprojects {
     group = "com.github.matielojg"

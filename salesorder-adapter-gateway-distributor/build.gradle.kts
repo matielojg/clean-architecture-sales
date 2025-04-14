@@ -15,6 +15,9 @@ dependencies {
     val junitVersion = rootProject.extra["junitVersion"] as String
     val springBootVersion = rootProject.extra["springBootVersion"] as String
     val slf4jVersion = rootProject.extra["slf4jVersion"] as String
+    val retrySpringVersion = rootProject.extra["retrySpringVersion"] as String
+
+    implementation("org.springframework.retry:spring-retry:$retrySpringVersion")
 
     implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     implementation("org.slf4j:slf4j-api:$slf4jVersion")

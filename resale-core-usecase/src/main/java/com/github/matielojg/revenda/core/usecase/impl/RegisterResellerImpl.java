@@ -18,8 +18,9 @@ public class RegisterResellerImpl implements RegisterReseller {
 
     // sobrecarga para receber dados simples direto do controller
     @Override
-    public void execute(Reseller reseller) {
+    public Reseller execute(Reseller reseller) {
         repository.save(reseller);
+        return reseller;
     }
 
     @SuppressWarnings("unused")

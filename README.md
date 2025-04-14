@@ -3,10 +3,25 @@
 ## [Evidências dos entregáveis](docs/EVIDENCES.md)
 
 
+![🍺Beer mug representing the Sales Order module](salesorder-api-rest/src/main/resources/static/favicon.ico)
+
 Este repositório contém a base do sistema de revenda e processamento de pedidos. Está organizado como **monorepo modularizado**, mas com estrutura pronta para futura **extração de microserviços independentes** (`resale`, `salesorder`, etc).
-
----
-
+m@tielo:~/Documents/Projetos/desafio_revenda/revenda-pedidos-api$ git pull origin main
+From github.com:matielojg/clean-architecture-sales
+ * branch            main       -> FETCH_HEAD
+Your local changes to the following files would be overwritten by merge:
+  docker-compose.override.yml resale-api-rest/Dockerfile salesorder-api-rest/Dockerfile salesorder-api-rest/src/main/resources/static/favi
+m@tielo:~/Documents/Projetos/desafio_revenda/revenda-pedidos-api$ git checkout feat/swagger-reseller-endpoints
+A       docker-compose.override.yml
+A       resale-api-rest/Dockerfile
+A       salesorder-api-rest/Dockerfile
+D       salesorder-api-rest/src/main/resources/static/favicon.ico
+D       salesorder-api-rest/src/main/resources/static/favicon1.ico
+Already on 'feat/swagger-reseller-endpoints'
+Your branch is up to date with 'origin/feat/swagger-reseller-endpoints'.
+m@tielo:~/Documents/Projetos/desafio_revenda/revenda-pedidos-api$ git merge main
+Your local changes to the following files would be overwritten by merge:
+  docker-compose.override.yml resale-api-rest/Dockerfile salesorder-api-rest/Dockerfile salesorder-api-rest/src/main/resources/static/favicon.ico salesorder-api-rest/src/main/resources/static/favicon1.icom@tielo:~/Documents/Projetos/desafio_revenda/revenda-pedidos-api$ 
 ## 🧱 Estrutura do projeto
 
 ```text

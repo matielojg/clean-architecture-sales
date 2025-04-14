@@ -20,6 +20,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
 
+    val springDocOpenapiVersion = rootProject.extra["springDocOpenapiVersion"] as String
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocOpenapiVersion")
+
 
     val junitVersion = rootProject.extra["junitVersion"] as String
     val assertjVersion = rootProject.extra["assertjVersion"] as String

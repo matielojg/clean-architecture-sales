@@ -23,8 +23,8 @@ public class SalesOrderMapper {
 
         List<SalesOrderItemEntity> items = domain.getItems().stream().map(item -> {
             SalesOrderItemEntity itemEntity = new SalesOrderItemEntity();
-            itemEntity.setSkuCode(item.getSkuCode());
-            itemEntity.setQuantity(item.getQuantity());
+            itemEntity.setSkuCode(item.skuCode());
+            itemEntity.setQuantity(item.quantity());
             itemEntity.setSalesOrder(entity);
             return itemEntity;
         }).toList();

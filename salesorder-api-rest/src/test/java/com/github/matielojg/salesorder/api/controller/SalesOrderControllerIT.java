@@ -23,12 +23,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Import(MockDistributorController.class)
 class SalesOrderControllerIT {
 
+    @LocalServerPort
+    @SuppressWarnings("unused")
+    private int port;
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @LocalServerPort
-    private int port;
     @Autowired
+    @SuppressWarnings("unused")
     private ObjectMapper objectMapper;
+
 
     @Test
     void shouldCreateSalesOrderSuccessfully() throws Exception {
@@ -54,10 +57,10 @@ class SalesOrderControllerIT {
                 SalesOrderResponse.class
         );
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(response.getBody()).isNotNull();
-        assertThat(Objects.requireNonNull(response.getBody()).getOrderId()).isNotNull();
-        List<SalesOrderResponse.ItemResponse> items = response.getBody().getItems();
+        assertThat(Objects.requireNonNull(response.getBody()).orderId()).isNotNull();
+        List<SalesOrderResponse.ItemResponse> items = response.getBody().items();
         assertThat(items).hasSize(2);
 
     }

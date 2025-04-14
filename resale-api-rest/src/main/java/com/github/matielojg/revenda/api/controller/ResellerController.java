@@ -1,6 +1,9 @@
 package com.github.matielojg.revenda.api.controller;
 
 import com.github.matielojg.revenda.api.dto.RegisterResellerRequest;
+import com.github.matielojg.revenda.api.dto.ResellerResponse;
+import com.github.matielojg.revenda.api.openapi.ResellerApi;
+import com.github.matielojg.revenda.core.domain.entity.Reseller;
 import com.github.matielojg.revenda.core.usecase.RegisterReseller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/resellers")
 @SuppressWarnings("unused")
-public class ResellerController {
+public class ResellerController implements ResellerApi {
 
     private final RegisterReseller registerReseller;
 
@@ -21,8 +24,17 @@ public class ResellerController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> register(@RequestBody RegisterResellerRequest request) {
-        registerReseller.execute(request.toDomain());
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<ResellerResponse> register(@RequestBody RegisterResellerRequest request) {
+        Reseller reseller = registerReseller.execute(request.toDomain());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                new ResellerResponse(
+                        reseller.id(),
+                        reseller.corporateName(),
+                        reseller.email().value(),
+                        reseller.cnpj().value()
+                )
+        );
     }
+
 }

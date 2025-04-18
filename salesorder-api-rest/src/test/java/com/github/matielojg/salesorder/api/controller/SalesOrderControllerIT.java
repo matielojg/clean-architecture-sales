@@ -23,11 +23,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Import(MockDistributorController.class)
 class SalesOrderControllerIT {
 
+    private final RestTemplate restTemplate = new RestTemplate();
     @LocalServerPort
     @SuppressWarnings("unused")
     private int port;
-    private final RestTemplate restTemplate = new RestTemplate();
-
     @Autowired
     @SuppressWarnings("unused")
     private ObjectMapper objectMapper;
@@ -35,12 +34,13 @@ class SalesOrderControllerIT {
 
     @Test
     void shouldCreateSalesOrderSuccessfully() throws Exception {
-        SalesOrderRequest request = new SalesOrderRequest();
-        request.setResellerId(UUID.randomUUID());
-        request.setItems(List.of(
-                createItem("SKU-001", 600),
-                createItem("SKU-002", 500)
-        ));
+        SalesOrderRequest request = new SalesOrderRequest(
+                UUID.randomUUID(),
+                List.of(
+                        new SalesOrderRequest.ItemRequest("SKU-001", 600),
+                        new SalesOrderRequest.ItemRequest("SKU-002", 500)
+                )
+        );
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -60,16 +60,12 @@ class SalesOrderControllerIT {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(response.getBody()).isNotNull();
         assertThat(Objects.requireNonNull(response.getBody()).orderId()).isNotNull();
-        List<SalesOrderResponse.ItemResponse> items = response.getBody().items();
-        assertThat(items).hasSize(2);
-
+        assertThat(response.getBody().items()).hasSize(2);
     }
 
+
     private ItemRequest createItem(String sku, int qty) {
-        ItemRequest item = new ItemRequest();
-        item.setSkuCode(sku);
-        item.setQuantity(qty);
-        return item;
+        return new SalesOrderRequest.ItemRequest(sku, qty);
     }
 
     @Test

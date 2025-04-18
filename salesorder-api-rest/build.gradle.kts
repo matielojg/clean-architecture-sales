@@ -23,12 +23,17 @@ dependencies {
     val springDocOpenapiVersion = rootProject.extra["springDocOpenapiVersion"] as String
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocOpenapiVersion")
 
+    val logbackClassicVersion = rootProject.extra["logbackClassicVersion"] as String
+    implementation("ch.qos.logback:logback-classic:$logbackClassicVersion")
+    val logbackEncoderVersion = rootProject.extra["logbackEncoderVersion"] as String
+    implementation("net.logstash.logback:logstash-logback-encoder:$logbackEncoderVersion")
 
     val junitVersion = rootProject.extra["junitVersion"] as String
     val assertjVersion = rootProject.extra["assertjVersion"] as String
     val mockitoVersion = rootProject.extra["mockitoVersion"] as String
     val junitPlatformLauncherVersion = rootProject.extra["junitPlatformLauncherVersion"] as String
     val h2DatabaseVersion = rootProject.extra["h2DatabaseVersion"] as String
+
 
     testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
     testImplementation("org.assertj:assertj-core:$assertjVersion")

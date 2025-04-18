@@ -5,6 +5,7 @@ import com.github.matielojg.revenda.api.dto.ResellerResponse;
 import com.github.matielojg.revenda.api.openapi.ResellerApi;
 import com.github.matielojg.revenda.core.domain.entity.Reseller;
 import com.github.matielojg.revenda.core.usecase.RegisterReseller;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,7 @@ public class ResellerController implements ResellerApi {
     }
 
     @PostMapping
-    public ResponseEntity<ResellerResponse> register(@RequestBody RegisterResellerRequest request) {
+    public ResponseEntity<ResellerResponse> register(@Valid @RequestBody RegisterResellerRequest request) {
         Reseller reseller = registerReseller.execute(request.toDomain());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(

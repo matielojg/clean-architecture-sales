@@ -6,6 +6,7 @@ import com.github.matielojg.salesorder.core.domain.vo.SalesOrderStatus;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public interface SalesOrderApi {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping
-    ResponseEntity<SalesOrderResponse> create(@RequestBody SalesOrderRequest request);
+    ResponseEntity<SalesOrderResponse> create(@Valid @RequestBody SalesOrderRequest request);
 
     @Operation(summary = "List sales orders filtered by status (optional)")
     @ApiResponses(value = {

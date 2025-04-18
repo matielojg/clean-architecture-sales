@@ -4,14 +4,21 @@ import com.github.matielojg.salesorder.api.controller.model.SalesOrderRequest;
 import com.github.matielojg.salesorder.api.controller.model.SalesOrderResponse;
 import com.github.matielojg.salesorder.api.openapi.SalesOrderApi;
 import com.github.matielojg.salesorder.core.domain.entity.SalesOrder;
+import com.github.matielojg.salesorder.core.domain.exception.InvalidSalesOrderException;
 import com.github.matielojg.salesorder.core.domain.vo.SalesOrderStatus;
 import com.github.matielojg.salesorder.core.gateway.SalesOrderRepository;
 import com.github.matielojg.salesorder.core.usecase.CreateSalesOrder;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/api/sales-orders")
 @SuppressWarnings("unused")
@@ -26,7 +33,7 @@ public class SalesOrderController implements SalesOrderApi {
         this.repository = repository;
     }
 
-    @GetMapping
+    @Override
     public List<SalesOrderResponse> listByStatus(@RequestParam(required = false) SalesOrderStatus status) {
         List<SalesOrder> orders = (status != null) ? repository.findByStatus(status) : List.of();
 
@@ -37,11 +44,14 @@ public class SalesOrderController implements SalesOrderApi {
     }
 
     @Override
-    public ResponseEntity<SalesOrderResponse> create(@RequestBody SalesOrderRequest request) {
+    public ResponseEntity<SalesOrderResponse> create(@Valid @RequestBody SalesOrderRequest request) {
+        if (request.items() == null) {
+            throw new InvalidSalesOrderException("Items list must not be null");
+        }
         SalesOrder order = createSalesOrder.execute(
-                request.getResellerId(),
-                request.getItems().stream()
-                        .map(i -> new CreateSalesOrder.ItemInput(i.getSkuCode(), i.getQuantity()))
+                request.resellerId(),
+                request.items().stream()
+                        .map(i -> new CreateSalesOrder.ItemInput(i.skuCode(), i.quantity()))
                         .toList()
         );
 
@@ -49,5 +59,4 @@ public class SalesOrderController implements SalesOrderApi {
                 .status(201)
                 .body(SalesOrderResponse.fromDomain(order));
     }
-
 }

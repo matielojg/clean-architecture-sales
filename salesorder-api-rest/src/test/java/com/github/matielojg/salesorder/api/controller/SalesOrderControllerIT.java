@@ -2,7 +2,6 @@ package com.github.matielojg.salesorder.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.matielojg.salesorder.api.controller.model.SalesOrderRequest;
-import com.github.matielojg.salesorder.api.controller.model.SalesOrderRequest.ItemRequest;
 import com.github.matielojg.salesorder.api.controller.model.SalesOrderResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,11 +60,6 @@ class SalesOrderControllerIT {
         assertThat(response.getBody()).isNotNull();
         assertThat(Objects.requireNonNull(response.getBody()).orderId()).isNotNull();
         assertThat(response.getBody().items()).hasSize(2);
-    }
-
-
-    private ItemRequest createItem(String sku, int qty) {
-        return new SalesOrderRequest.ItemRequest(sku, qty);
     }
 
     @Test

@@ -59,7 +59,7 @@ class SalesOrderControllerValidationIT {
         HttpEntity<String> httpRequest = new HttpEntity<>(json, headers);
 
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, httpRequest, String.class);
-        log.info("🔍 Validation response (missing fields): " + response.getBody());
+        log.info("🔍 Validation response (missing fields): {}" , response.getBody());
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
@@ -74,7 +74,7 @@ class SalesOrderControllerValidationIT {
         HttpEntity<String> httpRequest = new HttpEntity<>(objectMapper.writeValueAsString(request), headers);
 
         ResponseEntity<String> response = restTemplate.exchange(baseUrl(), HttpMethod.POST, httpRequest, String.class);
-        log.info("🔍 Validation response (business rule): " + response.getBody());
+        log.info("🔍 Validation response (business rule): {}" , response.getBody());
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(response.getBody()).contains("Sales order must contain at least 1000 units");

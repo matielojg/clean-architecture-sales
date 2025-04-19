@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://salesorder_postgres:5432/salesorder
     username: postgres
-    password: postgres
+    password: ${POSTGRES_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update

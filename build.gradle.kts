@@ -1,5 +1,5 @@
 plugins {
-    id("org.sonarqube") version "4.4.1.3373"
+    id("org.sonarqube") version "4.3.0.3225"
 }
 
 extra["junitVersion"] = "5.10.0"
@@ -48,12 +48,28 @@ subprojects {
 sonarqube {
     properties {
         property("sonar.projectKey", "revenda-pedidos-api")
+        property("sonar.projectName", "Revenda Pedidos API")
         property("sonar.host.url", "http://localhost:9000")
+        property("sonar.gradle.skipCompile", "true")
+
         val token = System.getenv("SONAR_TOKEN") ?: System.getProperty("SONAR_TOKEN")
         if (token != null) {
             property("sonar.token", token)
         } else {
             error("Missing SONAR_TOKEN (env or -DSONAR_TOKEN)")
         }
+
+        // Inclui main/java e main/resources (sem isso o erro persiste)
+        property("sonar.sources", "src/main/java,src/main/resources")
+        property("sonar.tests", "src/test/java")
+        property("sonar.inclusions", "**/*.java")
+        property("sonar.test.inclusions", "**/*Test.java,**/*IT.java")
+
+        // Exclui arquivos que causam duplicação
+        property("sonar.exclusions", "**/build/**,**/out/**")
     }
 }
+
+
+
+

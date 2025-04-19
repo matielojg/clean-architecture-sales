@@ -19,14 +19,13 @@ class CreateSalesOrderImplTest {
     private SalesOrderRepository salesOrderRepository;
     private DistributorGateway distributorGateway;
     private CreateSalesOrder createSalesOrder;
-    private LoggerGateway log;
 
     @BeforeEach
     void setUp() {
         salesOrderRepository = mock(SalesOrderRepository.class);
         distributorGateway = mock(DistributorGateway.class);
-        log = mock(LoggerGateway.class);
-        createSalesOrder = new CreateSalesOrderImpl(salesOrderRepository, distributorGateway,log);
+        LoggerGateway log = mock(LoggerGateway.class);
+        createSalesOrder = new CreateSalesOrderImpl(salesOrderRepository, distributorGateway, log);
     }
 
     @Test

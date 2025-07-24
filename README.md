@@ -41,24 +41,22 @@ revenda-pedidos-api/
 
 ---
 
-## 🐳 Como executar tudo com Docker + Gradle
+## 🐳 Execução com Docker Compose (recomendada)
 
-Este comando compila as aplicações e inicia os dois serviços Spring Boot (salesorder e resale).  
-⚠️ Antes de executá-lo, certifique-se de que a infraestrutura (banco e mock) já esteja rodando com Docker Compose.
+Para executar todo o projeto (incluindo bancos de dados, serviços e mocks), basta usar:
 
 ```bash
-docker compose up -d &&
-./build-and-run.sh
+docker compose up -d
 ```
 
----
-
-## 🐳 Execução com Docker Compose (recomendada)
+Isso irá:
+1. Compilar e iniciar os serviços Spring Boot (salesorder-api-rest e resale-api-rest)
+2. Iniciar o banco de dados PostgreSQL
+3. Iniciar o mock do distribuidor
+4. Iniciar o SonarQube para análise de código
 
 Para mais detalhes sobre como usar \`docker-compose.yml\` + \`docker-compose.override.yml\`, acesse:  
 [docs/docker-compose.md](./docs/docker-compose.md)
-
-> Sobe os containers (PostgreSQL + distribuidor mock) e inicia a aplicação \`salesorder-api-rest\`.
 
 ---
 

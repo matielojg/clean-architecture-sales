@@ -16,8 +16,12 @@ docker compose up -d
 ## 2. Compilação e Execução
 
 ```bash
-# Compile e execute a aplicação
-./build-and-run.sh
+# Compile e execute a aplicação com Docker Compose
+docker compose up -d
+
+# Alternativamente, para desenvolvimento local:
+./gradlew :salesorder-api-rest:bootRun -Dspring.profiles.active=dev
+./gradlew :resale-api-rest:bootRun -Dspring.profiles.active=dev
 ```
 
 ## 3. Testes Automatizados

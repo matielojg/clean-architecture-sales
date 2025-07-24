@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/resellers")
-@SuppressWarnings("unused")
 public class ResellerController implements ResellerApi {
 
     private final RegisterReseller registerReseller;

@@ -37,7 +37,7 @@ application {
 }
 
 tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
-    enabled = true
+    enabled = project.hasProperty("enableBootJar") || true
     mainClass.set("com.github.matielojg.revenda.RevendaPedidosApiApplication")
 }
 

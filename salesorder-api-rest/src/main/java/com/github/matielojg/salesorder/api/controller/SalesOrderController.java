@@ -4,7 +4,6 @@ import com.github.matielojg.salesorder.api.controller.model.SalesOrderRequest;
 import com.github.matielojg.salesorder.api.controller.model.SalesOrderResponse;
 import com.github.matielojg.salesorder.api.openapi.SalesOrderApi;
 import com.github.matielojg.salesorder.core.domain.entity.SalesOrder;
-import com.github.matielojg.salesorder.core.domain.exception.InvalidSalesOrderException;
 import com.github.matielojg.salesorder.core.domain.vo.SalesOrderStatus;
 import com.github.matielojg.salesorder.core.gateway.SalesOrderRepository;
 import com.github.matielojg.salesorder.core.usecase.CreateSalesOrder;
@@ -21,13 +20,11 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping("/api/sales-orders")
-@SuppressWarnings("unused")
 public class SalesOrderController implements SalesOrderApi {
 
     private final CreateSalesOrder createSalesOrder;
     private final SalesOrderRepository repository;
 
-    @SuppressWarnings("unused")
     public SalesOrderController(CreateSalesOrder createSalesOrder, SalesOrderRepository repository) {
         this.createSalesOrder = createSalesOrder;
         this.repository = repository;
@@ -45,9 +42,6 @@ public class SalesOrderController implements SalesOrderApi {
 
     @Override
     public ResponseEntity<SalesOrderResponse> create(@Valid @RequestBody SalesOrderRequest request) {
-        if (request.items() == null) {
-            throw new InvalidSalesOrderException("Items list must not be null");
-        }
         SalesOrder order = createSalesOrder.execute(
                 request.resellerId(),
                 request.items().stream()

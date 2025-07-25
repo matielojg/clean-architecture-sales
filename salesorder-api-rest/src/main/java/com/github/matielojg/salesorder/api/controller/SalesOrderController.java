@@ -7,6 +7,7 @@ import com.github.matielojg.salesorder.core.domain.entity.SalesOrder;
 import com.github.matielojg.salesorder.core.domain.vo.SalesOrderStatus;
 import com.github.matielojg.salesorder.core.gateway.SalesOrderRepository;
 import com.github.matielojg.salesorder.core.usecase.CreateSalesOrder;
+import io.micrometer.core.annotation.Timed;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -31,6 +32,7 @@ public class SalesOrderController implements SalesOrderApi {
     }
 
     @Override
+    @Timed(value = "salesorder.list", description = "Tempo de resposta para listar pedidos")
     public List<SalesOrderResponse> listByStatus(@RequestParam(required = false) SalesOrderStatus status) {
         List<SalesOrder> orders = (status != null) ? repository.findByStatus(status) : List.of();
 
@@ -41,6 +43,7 @@ public class SalesOrderController implements SalesOrderApi {
     }
 
     @Override
+    @Timed(value = "salesorder.create", description = "Tempo de resposta para criar pedidos")
     public ResponseEntity<SalesOrderResponse> create(@Valid @RequestBody SalesOrderRequest request) {
         SalesOrder order = createSalesOrder.execute(
                 request.resellerId(),

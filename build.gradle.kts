@@ -16,6 +16,7 @@ extra["springDocOpenapiVersion"] = "2.8.6"
 extra["retrySpringVersion"] = "2.0.11"
 extra["logbackClassicVersion"] = "1.5.18"
 extra["logbackEncoderVersion"] = "8.1"
+extra["datadogVersion"] = "1.18.0"
 
 allprojects {
     group = "com.github.matielojg"

@@ -99,6 +99,31 @@ Login: \`admin\` / \`admin\`
 
 ---
 
+## 📊 Observabilidade com DataDog
+
+Este projeto está configurado para enviar métricas, traces e logs para o DataDog.
+
+### Configuração
+
+1. Crie uma conta no [DataDog](https://www.datadoghq.com/)
+2. Obtenha sua chave de API
+3. Crie um arquivo `.env` na raiz do projeto com o conteúdo:
+   ```
+   DD_API_KEY=your_datadog_api_key_here
+   ```
+4. Execute o projeto com Docker Compose:
+   ```bash
+   docker compose up -d
+   ```
+
+### Dashboards
+
+Acesse o DataDog para visualizar:
+- Métricas de performance da aplicação
+- Traces de requisições
+- Logs consolidados
+- Alertas configurados
+
 
 ### 🚧 Em andamento
 

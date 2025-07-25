@@ -32,8 +32,11 @@ WORKDIR /app
 # Copiar o JAR compilado
 COPY --from=build /app/salesorder-api-rest/build/libs/salesorder-api-rest-0.0.1-SNAPSHOT.jar app.jar
 
+# Baixar o agente Java do DataDog
+ADD https://dtdg.co/latest-java-tracer /app/dd-java-agent.jar
+
 # Expor a porta
 EXPOSE 8080
 
-# Comando para executar a aplicação
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Comando para executar a aplicação com o agente DataDog
+ENTRYPOINT ["java", "-javaagent:/app/dd-java-agent.jar", "-Ddd.service=salesorder-api", "-Ddd.env=docker", "-Ddd.trace.agent.port=8126", "-Ddd.profiling.enabled=true", "-XX:FlightRecorderOptions=stackdepth=256", "-Ddd.logs.injection=true", "-Ddd.trace.sample.rate=1", "-jar", "app.jar"]

@@ -10,9 +10,6 @@ spring:
   h2:
     console.enabled: false
 
-distributor:
-  url: http://distributor-mock:8082
-
 management:
   datadog:
     metrics:

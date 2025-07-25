@@ -39,5 +39,10 @@ out/
 ### VS Code ###
 .vscode/
 
+### Environment Variables ###
+.env
+
+### Test Results ###
+results/
 
 resale-api-rest/data

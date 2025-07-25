@@ -12,6 +12,18 @@ spring:
     console:
       enabled: false
 
+management:
+  endpoints:
+    access:
+      default: none
+  datadog:
+    metrics:
+      export:
+        enabled: false
+  metrics:
+    enable:
+      all: false
+
 logging:
   level:
     root: WARN

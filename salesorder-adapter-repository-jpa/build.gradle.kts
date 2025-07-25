@@ -15,11 +15,13 @@ dependencies {
     val jakartaPersistenceVersion = rootProject.extra["jakartaPersistenceVersion"] as String
 //    val testcontainersVersion = rootProject.extra["testcontainersVersion"] as String
     val assertjVersion = rootProject.extra["assertjVersion"] as String
+    val postgresqlVersion = rootProject.extra["postgresqlVersion"] as String
+    val h2DatabaseVersion = rootProject.extra["h2DatabaseVersion"] as String
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
     implementation("jakarta.persistence:jakarta.persistence-api:$jakartaPersistenceVersion")
+    runtimeOnly("org.postgresql:postgresql:$postgresqlVersion")
 
-    val h2DatabaseVersion = rootProject.extra["h2DatabaseVersion"] as String
     testImplementation("com.h2database:h2:$h2DatabaseVersion")
     // ✅ dependências para testes de integração
     testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")

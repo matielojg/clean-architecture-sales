@@ -11,6 +11,36 @@ services:
       - sonarqube_extensions:/opt/sonarqube/extensions
     networks:
       - sonar-network
+      
+  datadog-agent:
+    image: gcr.io/datadoghq/agent:latest
+    container_name: datadog-agent
+    pid: host
+    environment:
+      - DD_API_KEY=${DD_API_KEY}
+      - DD_SITE=us5.datadoghq.com
+      - DD_APM_ENABLED=true
+      - DD_APM_NON_LOCAL_TRAFFIC=true
+      - DD_LOGS_ENABLED=true
+      # Desativando coleta de logs de contêineres devido a problemas de permissão
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=false
+      - DD_PROCESS_AGENT_ENABLED=true
+      - DD_DOCKER_LABELS_AS_TAGS={"com.docker.compose.service":"service_name"}
+      - DD_TAGS=env:dev
+      - DD_HOSTNAME=clean-architecture-sales
+      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
+      # Excluindo contêineres da coleta de logs
+      - DD_CONTAINER_EXCLUDE_LOGS=.*
+      - DD_CONTAINER_EXCLUDE="name:datadog-agent"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+    ports:
+      - "8125:8125/udp"
+      - "8126:8126/tcp"
+    networks:
+      - sonar-network
 
   sonarqube_postgres:
     image: postgres:15
@@ -47,6 +77,62 @@ services:
       - "8082:8080"
     volumes:
       - ./distributor-mock:/web
+    networks:
+      - sonar-network
+      
+  salesorder-api:
+    build:
+      context: .
+      dockerfile: salesorder-api-rest/Dockerfile
+    container_name: salesorder-api-rest
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://salesorder_postgres:5432/salesorder
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - DISTRIBUTOR_API_URL=http://distributor-mock:8080/api
+      - DD_API_KEY=${DD_API_KEY}
+      - MANAGEMENT_DATADOG_METRICS_EXPORT_APIKEY=${DD_API_KEY}
+      - DD_AGENT_HOST=datadog-agent
+      - DD_TRACE_AGENT_PORT=8126
+      - DD_PROFILING_ENABLED=true
+      - DD_LOGS_INJECTION=true
+      - DD_SERVICE=salesorder-api
+      - DD_ENV=docker
+      - DD_VERSION=0.0.1
+    depends_on:
+      - salesorder_postgres
+      - distributor-mock
+      - datadog-agent
+    networks:
+      - sonar-network
+      
+  resale-api:
+    build:
+      context: .
+      dockerfile: resale-api-rest/Dockerfile
+    container_name: resale-api-rest
+    ports:
+      - "8081:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://salesorder_postgres:5432/salesorder
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - DD_API_KEY=${DD_API_KEY}
+      - MANAGEMENT_DATADOG_METRICS_EXPORT_APIKEY=${DD_API_KEY}
+      - DD_AGENT_HOST=datadog-agent
+      - DD_TRACE_AGENT_PORT=8126
+      - DD_PROFILING_ENABLED=true
+      - DD_LOGS_INJECTION=true
+      - DD_SERVICE=resale-api
+      - DD_ENV=docker
+      - DD_VERSION=0.0.1
+    depends_on:
+      - salesorder_postgres
+      - datadog-agent
     networks:
       - sonar-network
 

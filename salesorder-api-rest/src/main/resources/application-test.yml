@@ -16,5 +16,17 @@ spring:
     console:
       enabled: false
 
+management:
+  endpoints:
+    access:
+      default: none
+  datadog:
+    metrics:
+      export:
+        enabled: false
+  metrics:
+    enable:
+      all: false
+
 distributor:
   url: http://localhost:8082

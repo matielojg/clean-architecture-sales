@@ -23,7 +23,6 @@ public class RegisterResellerImpl implements RegisterReseller {
         return reseller;
     }
 
-    @SuppressWarnings("unused")
     public void execute(String cnpj, String name, String email) {
         Reseller reseller = new Reseller(
                 UUID.randomUUID(),

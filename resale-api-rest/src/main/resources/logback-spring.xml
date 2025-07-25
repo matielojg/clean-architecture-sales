@@ -11,7 +11,7 @@
                     {
                     "timestamp": "%date{ISO8601}",
                     "level": "%level",
-                    "service": "salesorder-api",
+                    "service": "resale-api",
                     "thread": "%thread",
                     "class": "%logger{40}",
                     "message": "%message",

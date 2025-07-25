@@ -5,6 +5,7 @@ import com.github.matielojg.revenda.api.dto.ResellerResponse;
 import com.github.matielojg.revenda.api.openapi.ResellerApi;
 import com.github.matielojg.revenda.core.domain.entity.Reseller;
 import com.github.matielojg.revenda.core.usecase.RegisterReseller;
+import io.micrometer.core.annotation.Timed;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/resellers")
-@SuppressWarnings("unused")
 public class ResellerController implements ResellerApi {
 
     private final RegisterReseller registerReseller;
@@ -25,6 +25,7 @@ public class ResellerController implements ResellerApi {
     }
 
     @PostMapping
+    @Timed(value = "reseller.register", description = "Tempo de resposta para registrar revendedor")
     public ResponseEntity<ResellerResponse> register(@Valid @RequestBody RegisterResellerRequest request) {
         Reseller reseller = registerReseller.execute(request.toDomain());
 

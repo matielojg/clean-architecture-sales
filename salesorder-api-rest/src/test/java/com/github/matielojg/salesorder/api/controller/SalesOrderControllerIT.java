@@ -18,16 +18,17 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(
+    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+    classes = com.github.matielojg.salesorder.TestConfiguration.class
+)
 @Import(MockDistributorController.class)
 class SalesOrderControllerIT {
 
     private final RestTemplate restTemplate = new RestTemplate();
     @LocalServerPort
-    @SuppressWarnings("unused")
     private int port;
     @Autowired
-    @SuppressWarnings("unused")
     private ObjectMapper objectMapper;
 
 
@@ -58,8 +59,9 @@ class SalesOrderControllerIT {
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(response.getBody()).isNotNull();
-        assertThat(Objects.requireNonNull(response.getBody()).orderId()).isNotNull();
-        assertThat(response.getBody().items()).hasSize(2);
+        SalesOrderResponse body = Objects.requireNonNull(response.getBody());
+        assertThat(body.orderId()).isNotNull();
+        assertThat(body.items()).hasSize(2);
     }
 
     @Test

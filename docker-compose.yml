@@ -93,6 +93,8 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - DISTRIBUTOR_API_URL=http://distributor-mock:8080/api
+      - DD_API_KEY=${DD_API_KEY}
+      - MANAGEMENT_DATADOG_METRICS_EXPORT_APIKEY=${DD_API_KEY}
       - DD_AGENT_HOST=datadog-agent
       - DD_TRACE_AGENT_PORT=8126
       - DD_PROFILING_ENABLED=true
@@ -119,6 +121,8 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://salesorder_postgres:5432/salesorder
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
+      - DD_API_KEY=${DD_API_KEY}
+      - MANAGEMENT_DATADOG_METRICS_EXPORT_APIKEY=${DD_API_KEY}
       - DD_AGENT_HOST=datadog-agent
       - DD_TRACE_AGENT_PORT=8126
       - DD_PROFILING_ENABLED=true

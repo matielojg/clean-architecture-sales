@@ -41,6 +41,7 @@ dependencies {
     val mockitoVersion = rootProject.extra["mockitoVersion"] as String
     val junitPlatformLauncherVersion = rootProject.extra["junitPlatformLauncherVersion"] as String
     val h2DatabaseVersion = rootProject.extra["h2DatabaseVersion"] as String
+    val postgresqlVersion = rootProject.extra["postgresqlVersion"] as String
 
 
     testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion") {
@@ -51,8 +52,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:$junitPlatformLauncherVersion")
     runtimeOnly("com.h2database:h2:$h2DatabaseVersion")
-
-
+    runtimeOnly("org.postgresql:postgresql:$postgresqlVersion")
 
 }
 

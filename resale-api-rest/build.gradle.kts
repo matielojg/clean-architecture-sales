@@ -9,6 +9,7 @@ plugins {
 val springBootVersion = rootProject.extra["springBootVersion"] as String
 val junitVersion = rootProject.extra["junitVersion"] as String
 val assertjVersion = rootProject.extra["assertjVersion"] as String
+val postgresqlVersion = rootProject.extra["postgresqlVersion"] as String
 
 dependencies {
     // Módulos do projeto
@@ -20,6 +21,8 @@ dependencies {
     implementation(project(":resale-adapter-gateway-api"))
     // Banco em memória
     implementation("com.h2database:h2")
+    // PostgreSQL para produção
+    runtimeOnly("org.postgresql:postgresql:$postgresqlVersion")
     // Spring Boot
     implementation("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
     implementation("org.springframework.boot:spring-boot-starter-actuator:$springBootVersion")

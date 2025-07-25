@@ -21,7 +21,11 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = "spring.profiles.active=test")
+@SpringBootTest(
+    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+    classes = com.github.matielojg.salesorder.TestConfiguration.class,
+    properties = "spring.profiles.active=test"
+)
 class SalesOrderControllerValidationIT {
 
     private final RestTemplate restTemplate = new RestTemplate();
